@@ -9,4 +9,4 @@ Implementacja logiki została rozpoczęta z wykorzystaniem tablic, ze względu n
 
 # Jak uruchomić aplikację?
 
-Należy uruchomić projekt API o nazwie Battleship na porcie 443, gdyby API nie uruchomiło się automatycznie na porcie 443 należy dokonać zmiany w pliku launchSettings.json w folderze Properties. Po uruchomieniu API należ przejść do folderu battelship-front/battleship i wywołać komendę npm install, a następnie npm start (wymagane node.js).
+Należy uruchomić projekt API o nazwie Battleship na porcie 443, gdyby API nie uruchomiło się automatycznie na porcie 443 należy dokonać zmiany w pliku launchSettings.json w folderze Properties. Po uruchomieniu API należy przejść do folderu battelship-front/battleship i wywołać komendę npm install, a następnie npm start (wymagane node.js).
