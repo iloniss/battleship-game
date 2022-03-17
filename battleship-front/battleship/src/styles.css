@@ -1,0 +1,76 @@
+.fplayer {
+  background-color: gainsboro;
+  font-size: 23px;
+  width: 45%;
+  display: inline-block;
+  margin: 2.5%;
+  justify-content: center;
+}
+.splayer {
+  background-color: ghostwhite;
+  font-size: 23px;
+  width: 45%;
+  display: inline-block;
+  margin: 2.5%;
+  justify-content: center;
+}
+
+.white {
+  background-color: white;
+}
+.red {
+  background-color: red;
+}
+
+.grey {
+  background-color: grey;
+}
+.green {
+  background-color: green;
+}
+
+.App {
+  margin-top: 3%;
+  width: 100%;
+  justify-content: center;
+  display: flexbox;
+}
+
+.board {
+  justify-content: center;
+  padding-bottom: 2%;
+}
+
+.rowBoard {
+  margin-top: 0.8%;
+  margin-bottom: 0.8%;
+  justify-content: center;
+  display: flex;
+}
+.icon {
+  margin-left: 4%;
+  margin-right: 4%;
+}
+
+.button {
+  width: 200px;
+  height: 50px;
+  margin-left: 2.5%;
+  font-size: 15px;
+  border-radius: 7px;
+  border-color: grey;
+}
+.button:hover {
+  background-color: #c0c0c0;
+}
+.text {
+  font-size: 25px;
+  text-align: center;
+  display: inline-flexbox;
+}
+
+.tittle {
+  font-size: 45px;
+  text-align: left;
+  margin-left: 2.5%;
+}
