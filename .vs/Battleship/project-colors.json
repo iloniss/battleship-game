@@ -1,0 +1,26 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "e3a3aed0-ea74-491b-92d0-d30f468201ea": {
+      "ProjectGuid": "e3a3aed0-ea74-491b-92d0-d30f468201ea",
+      "DisplayName": "Battleship",
+      "ColorIndex": 0
+    },
+    "f0f08e80-89d7-4058-937f-d1c6640e199a": {
+      "ProjectGuid": "f0f08e80-89d7-4058-937f-d1c6640e199a",
+      "DisplayName": "ConsoleApp1",
+      "ColorIndex": 1
+    },
+    "9ccacd08-31b9-44e4-8a31-2d69f4273363": {
+      "ProjectGuid": "9ccacd08-31b9-44e4-8a31-2d69f4273363",
+      "DisplayName": "Battleship.CORE",
+      "ColorIndex": 2
+    },
+    "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3": {
+      "ProjectGuid": "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3",
+      "DisplayName": "Miscellaneous Files",
+      "ColorIndex": -1
+    }
+  },
+  "NextColorIndex": 3
+}
