@@ -6,7 +6,5 @@ namespace Battleship.Models
     {
         public List<List<int>> FirstPlayer { get; set; }
         public List<List<int>> SecondPlayer { get; set; }
-
-
     }
 }

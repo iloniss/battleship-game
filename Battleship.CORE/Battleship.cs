@@ -10,9 +10,7 @@ namespace Battleship.CORE
     public interface IBattleship
     {
         List<int[,]> GenerateGame();
-        List<List<int>> TransformToList(int[,] board);
         MovementOutput Movement(int[,] board);
-        int[,] TransformToArray(List<List<int>> board);
     }
     public class Battleship: IBattleship
     {
@@ -20,7 +18,6 @@ namespace Battleship.CORE
 
         public List<int[,]> GenerateGame()
         {
-
             List<int[,]> boardList = new();
 
             for (int i = 0; i < 2; i++)
@@ -33,21 +30,17 @@ namespace Battleship.CORE
                 {
                     board = FillArray(board, new List<Models.Index>(), s);
                 }
-
                 boardList.Add(board);
             }
-
             return boardList;
-
         }
 
         public MovementOutput Movement(int[,] board)
         {
-            var avaiablePlayIndex = SavePlayIndex(board);
-            var startPlayIndex = CreatePlayIndex(avaiablePlayIndex);
+            var availablePlayIndex = SavePlayIndex(board);
+            var startPlayIndex = CreatePlayIndex(availablePlayIndex);
             int iPlayRandom = startPlayIndex.Row;
             int jPlayRandom = startPlayIndex.Column;
-
                     
             if (board[iPlayRandom, jPlayRandom] == (int)FieldEnum.BattleshipField)
                 board[iPlayRandom, jPlayRandom] = (int)FieldEnum.HitField;
@@ -60,8 +53,7 @@ namespace Battleship.CORE
                     Board = board,
                     StatusGame = (int)StatusEnum.Mishit
                 };
-            }
-                
+            }       
 
             if (CheckStatusFieldBattleship(board))
             {
@@ -78,41 +70,10 @@ namespace Battleship.CORE
                     Board = board,
                     StatusGame = (int)StatusEnum.EndOfGame
                 };
-            }
-                
-        }
-        public int[,] TransformToArray(List<List<int>> board)
-        {
-            int[,] array = new int[size, size];
-
-            for (int k = 0; k < size; k++)
-            {
-                for (int j = 0; j < size; j++)
-                {
-                    array[k, j] = board[k][j];
-                }
-            }
-
-            return array;
-        }
-        public List<List<int>> TransformToList(int[,] board)
-        {
-            
-            List<List<int>> iList = new();
-
-            for (int k = 0; k < size; k++)
-            {
-                List<int> jList = new();
-                for (int j = 0; j < size; j++)
-                {
-                    jList.Add(board[k, j]);
-                }
-                iList.Add(jList);
-            }
-            return iList;
+            }              
         }
 
-        private bool CheckStatusFieldBattleship(int[,] board)
+        private static bool CheckStatusFieldBattleship(int[,] board)
         {
             for (int i = 0; i < size; i++)
             {
@@ -123,21 +84,20 @@ namespace Battleship.CORE
                 }
             }
             return false;
-
         }
 
-        private Models.Index CreatePlayIndex(List<Models.Index> avaiablePlayIndex)
+        private static Models.Index CreatePlayIndex(List<Models.Index> availablePlayIndex)
         {
-            int id = new Random().Next(avaiablePlayIndex.Count);
+            int id = new Random().Next(availablePlayIndex.Count);
 
-            var startPlayIndex = avaiablePlayIndex[id];
+            var startPlayIndex = availablePlayIndex[id];
 
             return startPlayIndex;
         }
 
-        private List<Models.Index> SavePlayIndex(int[,] board)
+        private static List<Models.Index> SavePlayIndex(int[,] board)
         {
-            var avaiablePlayIndex = new List<Models.Index>();
+            var availablePlayIndex = new List<Models.Index>();
 
             for (int i = 0; i < size; i++)
             {
@@ -145,7 +105,7 @@ namespace Battleship.CORE
                 {
                     if (board[i, j] == (int)FieldEnum.EmptyField || board[i, j] == (int)FieldEnum.ForbiddenField || board[i, j] == (int)FieldEnum.BattleshipField)
                     {
-                        avaiablePlayIndex.Add(new Models.Index()
+                        availablePlayIndex.Add(new Models.Index()
                         {
                             Row = i,
                             Column = j
@@ -153,11 +113,10 @@ namespace Battleship.CORE
                     }
                 }
             }
-            return avaiablePlayIndex;
-
+            return availablePlayIndex;
         }
 
-        private int[,] CreateArray()
+        private static int[,] CreateArray()
         {
             int[,] board = new int[size, size];
 
@@ -171,37 +130,37 @@ namespace Battleship.CORE
             return board;
         }
 
-        private int[,] FillArray(int[,] board, List<Models.Index> avaiableIndex, int sizeBattleship)
+        private int[,] FillArray(int[,] board, List<Models.Index> availableIndex, int sizeBattleship)
         {
-            if (avaiableIndex.Count == 0)
-                avaiableIndex = SaveIndex(board);
-            var startIndex = CreateIndex(avaiableIndex);
+            if (availableIndex.Count == 0)
+                availableIndex = SaveIndex(board);
+            var startIndex = CreateIndex(availableIndex);
             int iRandom = startIndex.Row;
             int jRandom = startIndex.Column;
             int direction = new Random().Next(3) + 1;
             List<int> checkedDirections = new();
 
 
-            board = GenerateShip(iRandom, jRandom, direction, sizeBattleship, board, checkedDirections, avaiableIndex);
+            board = GenerateShip(iRandom, jRandom, direction, sizeBattleship, board, checkedDirections, availableIndex);
 
             return board;
         }
 
         private int[,] GenerateShip(int iRandom, int jRandom, int direction, int sizeBattleship,
-            int[,] board, List<int> checkedDirections, List<Models.Index> avaiableIndex)
+            int[,] board, List<int> checkedDirections, List<Models.Index> availableIndex)
         {
             if (CheckDirection(direction, iRandom, jRandom, sizeBattleship, board))
             {
                 board = CreateShip(jRandom, iRandom, sizeBattleship, board, direction);
-                board = CreateForbbidenFields(board);
+                board = CreateForbiddenFields(board);
                 return board;
             }
             else
             {
                 if (checkedDirections.Count == 4)
                 {
-                    avaiableIndex = UpdateIndex(avaiableIndex, iRandom, jRandom);
-                    return FillArray(board, avaiableIndex, sizeBattleship);
+                    availableIndex = UpdateIndex(availableIndex, iRandom, jRandom);
+                    return FillArray(board, availableIndex, sizeBattleship);
                 }
                 checkedDirections.Add(direction);
 
@@ -210,12 +169,12 @@ namespace Battleship.CORE
                 if (direction > 4)
                     direction = 1;
 
-                GenerateShip(iRandom, jRandom, direction, sizeBattleship, board, checkedDirections, avaiableIndex);
+                GenerateShip(iRandom, jRandom, direction, sizeBattleship, board, checkedDirections, availableIndex);
             }
             return board;
         }
 
-        private bool CheckDirection(int direction, int iRandom, int jRandom, int sizeBattleship, int[,] board)
+        private static bool CheckDirection(int direction, int iRandom, int jRandom, int sizeBattleship, int[,] board)
         {
             switch (direction)
             {
@@ -242,10 +201,9 @@ namespace Battleship.CORE
                 default:
                     return false;
             }
-
         }
 
-        private bool CheckStatusFieldUp(int jRandom, int iRandom, int[,] board, int sizeBattleship)
+        private static bool CheckStatusFieldUp(int jRandom, int iRandom, int[,] board, int sizeBattleship)
         {
             var correctField = new List<int>();
 
@@ -263,7 +221,7 @@ namespace Battleship.CORE
             return false;
         }
 
-        private bool CheckStatusFieldDown(int jRandom, int iRandom, int[,] board, int sizeBattleship)
+        private static bool CheckStatusFieldDown(int jRandom, int iRandom, int[,] board, int sizeBattleship)
         {
             var correctField = new List<int>();
 
@@ -281,7 +239,7 @@ namespace Battleship.CORE
             return false;
         }
 
-        private bool CheckStatusFieldRight(int jRandom, int iRandom, int[,] board, int sizeBattleship)
+        private static bool CheckStatusFieldRight(int jRandom, int iRandom, int[,] board, int sizeBattleship)
         {
             var correctField = new List<int>();
 
@@ -299,7 +257,7 @@ namespace Battleship.CORE
             return false;
         }
 
-        private bool CheckStatusFieldLeft(int jRandom, int iRandom, int[,] board, int sizeBattleship)
+        private static bool CheckStatusFieldLeft(int jRandom, int iRandom, int[,] board, int sizeBattleship)
         {
             var correctField = new List<int>();
 
@@ -317,7 +275,7 @@ namespace Battleship.CORE
             return false;
         }
 
-        private int[,] CreateShip(int jRandom, int iRandom, int sizeBattleship, int[,] board, int direction)
+        private static int[,] CreateShip(int jRandom, int iRandom, int sizeBattleship, int[,] board, int direction)
         {
             switch (direction)
             {
@@ -343,7 +301,7 @@ namespace Battleship.CORE
             return board;
         }
 
-        private int[,] CreateForbbidenFields(int[,] board)
+        private static int[,] CreateForbiddenFields(int[,] board)
         {
             for (int i = 0; i < size; i++)
             {
@@ -386,9 +344,9 @@ namespace Battleship.CORE
             return board;
         }
 
-        private List<Models.Index> SaveIndex(int[,] board)
+        private static List<Models.Index> SaveIndex(int[,] board)
         {
-            var avaiableIndex = new List<Models.Index>();
+            var availableIndex = new List<Models.Index>();
 
             for (int i = 0; i < size; i++)
             {
@@ -396,7 +354,7 @@ namespace Battleship.CORE
                 {
                     if (board[i, j] == (int)FieldEnum.EmptyField)
                     {
-                        avaiableIndex.Add(new Models.Index()
+                        availableIndex.Add(new Models.Index()
                         {
                             Row = i,
                             Column = j
@@ -404,22 +362,21 @@ namespace Battleship.CORE
                     }
                 }
             }
-            return avaiableIndex;
-
+            return availableIndex;
         }
 
-        private Models.Index CreateIndex(List<Models.Index> avaiableIndex)
+        private static Models.Index CreateIndex(List<Models.Index> availableIndex)
         {
-            int id = new Random().Next(avaiableIndex.Count);
+            int id = new Random().Next(availableIndex.Count);
 
-            var startIndex = avaiableIndex[id];
+            var startIndex = availableIndex[id];
 
             return startIndex;
         }
 
-        private List<Models.Index> UpdateIndex(List<Models.Index> avaiableIndex, int iRandom, int jRandom)
+        private static List<Models.Index> UpdateIndex(List<Models.Index> availableIndex, int iRandom, int jRandom)
         {
-            return avaiableIndex.Where(x => x.Row != iRandom && x.Column != jRandom).ToList();
+            return availableIndex.Where(x => x.Row != iRandom && x.Column != jRandom).ToList();
 
         }
     }
